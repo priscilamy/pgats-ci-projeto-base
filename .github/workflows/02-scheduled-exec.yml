@@ -1,10 +1,11 @@
 # nome que vai aparecer no github
 name: 'Execução agendada'
-# triggers ou gatilhos de execucao
+
+# triggers ou gatilhos de execução
 # Gatilho de execução agendada por períodos definidos no repositório = schedule
 on:
   schedule:
-    - cron: '30 7 * * 3'
+    - cron: '30 7 * * 4'
     # cron POSIX:
     # a = munuto
     # b = hora
@@ -15,19 +16,19 @@ on:
     # escrita: 
     # a b c d e
     # 0 8 * * 1
-    # Roda toda segunda-feira, às 8h00 da manhã
+    # Roda toda segunda-feira, às 11h00 da manhã (UTC - 3h a menos do horário desejado)
 
 jobs:
-  # - baixar as dependencias
+  # - baixar as dependências
   # - compilar
   # - testar
   e2e-tests:
     # maquina que vai rodar
     runs-on: ['ubuntu-latest']
 
-    #passo a paso das acoes do job
+    #passo a passo das ações do job
     steps:
-      # - run: echo 'Execucao manual'
+      # - run: echo 'Execução agendada'
       - uses: actions/checkout@v4
       # - uses: actions/setup-node@v4
       #     with:
@@ -45,7 +46,7 @@ jobs:
         run: yarn run e2e
 
       - uses: actions/upload-artifact@v4
-        # por padrao a pipeline cancela se houver erro para evitar que ele cancele o passo seguinte no caso de erro, se quiser que a pipeline continue, basta adicionar o parametro 'if: ${{ !cancelled() }}'
+        # por padrão a pipeline cancela se houver erro para evitar que ele cancele o passo seguinte no caso de erro, se quiser que a pipeline continue, basta adicionar o parametro 'if: ${{ !cancelled() }}'
         if: ${{ !cancelled() }}
         with:
           name: relatorio-de-testes
