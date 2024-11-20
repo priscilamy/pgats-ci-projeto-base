@@ -10,8 +10,11 @@ jobs:
   # - baixar as dependências
   # - compilar
   # - testar
+
+  # descrição do job
   e2e-tests:
-    # máquina que vai rodar
+
+    # máquina que o job vai executar
     runs-on: ['ubuntu-latest']
 
     #passo a passo das ações do job

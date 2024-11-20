@@ -1,39 +1,24 @@
-# nome que vai aparecer no github
+# Ci de Nível 03 - Disparo automático sempre que outro for concluído, como deploy
+
 name: 'Execução por deploy'
 
 # triggers ou gatilhos de execução
 # Gatilho de execução por deploy após outro workflow executado = workflow_run
+
 on:
   workflow_run:
-    workflows: ['Execucao manual']
+    workflows: ['Execução manual']
     types:
       - completed
 
 jobs:
   e2e-tests:
-    # máquina que vai rodar
-    runs-on: ['ubuntu-latest']
+    runs-on: ubuntu-latest
 
-    # passo a passo das ações do job
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-
-            Repository: ${{ github.repository }}
-
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-      # - run: echo 'Execucao manual'
       - uses: actions/checkout@v4
-      - uses: bahmutov/npm-install@v1
-      # - uses: actions/setup-node@v4
-      #     with:
-      #         node-version: lts/*
 
       - name: Instalando Yarn
         run: npm install -g yarn
@@ -42,7 +27,7 @@ jobs:
         run: yarn
 
       - name: Instalando Playwright
-        run: yarn playwright install --with-deps
+        run: yarn playwright install
 
       - name: Testes E2E (end-to-end)
         run: yarn run e2e
