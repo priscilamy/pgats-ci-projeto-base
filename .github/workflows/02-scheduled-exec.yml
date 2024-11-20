@@ -4,7 +4,7 @@ name: 'Execução agendada'
 # Gatilho de execução agendada por períodos definidos no repositório = schedule
 on:
   schedule:
-    - cron: '20 13 * * 3'
+    - cron: '30 7 * * 3'
     # cron POSIX:
     # a = munuto
     # b = hora
