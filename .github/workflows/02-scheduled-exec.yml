@@ -1,9 +1,21 @@
 # nome que vai aparecer no github
-name: 'Execução manual'
+name: 'Execução agendada'
 # triggers ou gatilhos de execucao
-# gatilho de exec manual = workflow_diospatch
+# Gatilho de execução agendada por períodos definidos no repositório = schedule
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '30 13 * * 3'
+    # cron POSIX:
+    # a = munuto
+    # b = hora
+    # c = dias do mês
+    # d = meses do ano
+    # e = dias da semana
+
+    # escrita: 
+    # a b c d e
+    # 0 8 * * 1
+    # Roda toda segunda-feira, às 8h00 da manhã
 
 jobs:
   # - baixar as dependencias
@@ -38,11 +50,3 @@ jobs:
         with:
           name: relatorio-de-testes
           path: ./playwright-report
-
-
-
-# comit:
-# git add <arquivos> - adicionar as alterações para a area de 'staging'
-# git commit -m "mensagem do commit"
-# git push 
-# convenção de comits (conventional comits) = comentários (ex: ci, feat, fix, test)         
